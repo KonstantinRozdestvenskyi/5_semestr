@@ -10,12 +10,12 @@ BEGIN
 		SET @DateToCheck = GETDATE();
 	SELECT Description, DiscountPct, Type, Category, StartDate, EndDate, MinQty, MaxQty
 		FROM Sales.SpecialOffer
-		WHERE Category = @Category
+		WHERE Category = @Category AND @DateToCheck BETWEEN StartDate AND EndDate
 		ORDER BY StartDate, EndDate
 END
 
 GO
-EXEC Sales.GetDiscountsForCategoryAndDate 'Reseller';
-DECLARE @DateToCheck datetime
+--EXEC Sales.GetDiscountsForCategoryAndDate 'Reseller';
+DECLARE @DateToCheck datetime;
 SET @DateToCheck = DateAdd(month, 1, GetDate());
 EXEC Sales.GetDiscountsForCategoryAndDate 'Reseller', @DateToCheck;
